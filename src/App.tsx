@@ -5,7 +5,15 @@ import axios from "axios";
 function App() {
   const [endpoints, setEndpoints] = useState([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchEndpointsData = async () => {
+      const response = await axios.get(
+        "https://ciphersprint.pulley.com/timdecillis@gmail.com"
+      );
+      console.log("respo:", response);
+    };
+    // fetchEndpointsData();
+  }, []);
   return (
     <div className="App">
       <h1>Endpoints Data</h1>
