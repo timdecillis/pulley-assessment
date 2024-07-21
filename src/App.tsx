@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
+import axios from "axios";
 
 function App() {
   const [endpoints, setEndpoints] = useState([]);
+
+  useEffect(() => {}, []);
   return (
     <div className="App">
       <h1>Endpoints Data</h1>
