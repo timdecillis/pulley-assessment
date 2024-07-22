@@ -8,7 +8,7 @@ function App() {
   useEffect(() => {
     const fetchEndpointsData = async () => {
       const response = await axios.get("/api/timdecillis@gmail.com");
-      console.log(response)
+      console.log(response);
       setEndpoints((prevEndpoints) => [...prevEndpoints, response.data]);
     };
     fetchEndpointsData();
@@ -16,10 +16,18 @@ function App() {
   return (
     <div className="App">
       <h1>Endpoints Data</h1>
-      {endpoints.map((object) => {
+      {endpoints.map((object, i) => {
+        const keys = Object.keys(object);
         return (
-          <div>{object.challenger}</div>
-        )
+          <div>
+            <h5>Step {object.level}</h5>
+            {keys.map((key) => {
+              return <div>{object[key]}</div>;
+            })}
+          </div>
+        );
+
+        return <div>{object.challenger}</div>;
       })}
     </div>
   );
