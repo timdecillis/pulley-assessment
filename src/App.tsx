@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import axios from "axios";
 
 function App() {
   const [endpoints, setEndpoints] = useState<any[]>([]);
+  const hasFetched = useRef(false);
 
   useEffect(() => {
     const fetchEndpointsData = async () => {
+      if (hasFetched.current) return;
+      hasFetched.current = true;
+
       const response = await axios.get("/api/timdecillis@gmail.com");
       console.log(response);
       setEndpoints((prevEndpoints) => [...prevEndpoints, response.data]);
