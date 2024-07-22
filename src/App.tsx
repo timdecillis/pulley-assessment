@@ -31,7 +31,27 @@ function App() {
         );
       }
       const response3 = nextPath ? await axios.get(`task_${nextPath}`) : null;
-      console.log('3:', response3.data)
+      let nextPath2;
+      function swapPairs(str: string) {
+        let swappedStr = "";
+
+        for (let i = 0; i < str.length; i += 2) {
+          if (i + 1 < str.length) {
+            // Swap the pair of characters
+            swappedStr += str[i + 1] + str[i];
+          } else {
+            // If there is an odd number of characters, just add the last character
+            swappedStr += str[i];
+          }
+        }
+
+        return swappedStr;
+      }
+
+      nextPath2 = swapPairs(response3?.data.encrypted_path.slice(5));
+      console.log("3:", nextPath2);
+      const response4 = nextPath2 ? await axios.get(`task_${nextPath2}`) : null;
+      console.log('4:', response4?.data)
 
       // setObjects((prevData) => [...prevData, response.data]);
     };
