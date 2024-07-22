@@ -10,9 +10,7 @@ function App() {
     const fetchEndpointsData = async () => {
       if (hasFetched.current) return;
       hasFetched.current = true;
-
       const response = await axios.get("/api/timdecillis@gmail.com");
-      console.log(response);
       setEndpoints((prevEndpoints) => [...prevEndpoints, response.data]);
     };
     fetchEndpointsData();
@@ -23,10 +21,10 @@ function App() {
       {endpoints.map((object, i) => {
         const keys = Object.keys(object);
         return (
-          <div>
+          <div key={i}>
             <h5>Step {object.level}</h5>
-            {keys.map((key) => {
-              return <div>{object[key]}</div>;
+            {keys.map((key, index) => {
+              return <div key={index}>{object[key]}</div>;
             })}
           </div>
         );
