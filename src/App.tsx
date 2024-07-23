@@ -39,6 +39,7 @@ function App() {
     let queue = ["/api/timdecillis@gmail.com"];
     while (queue.length) {
       const url = queue.pop();
+      console.log('url:', url)
       if (url) {
         const response = await axios.get(url);
         console.log("response:", response.data);
@@ -56,17 +57,16 @@ function App() {
           encrypted_path = swapPairs(encrypted_path);
         }
         if (response.data.encryption_method.slice(0, 5) === "added") {
-          let numberToAdd: number;
+          let numberToAdd: number| string;
           const method = response.data.encryption_method;
           if (method.slice(7, 8) !== " ") {
             numberToAdd = method.slice(6, 8);
           } else {
             numberToAdd = method.slice(6, 7);
           }
-          encrypted_path = decodeAsciiString(
-            JSON.parse(encrypted_path),
-            numberToAdd
-          );
+          numberToAdd = parseInt(numberToAdd as string);
+          console.log('num to add:', numberToAdd)
+          encrypted_path = decodeAsciiString(encrypted_path, numberToAdd);
         }
         queue.push(`task_${encrypted_path}`);
       }
