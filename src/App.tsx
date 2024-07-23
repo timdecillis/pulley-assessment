@@ -23,7 +23,7 @@ function App() {
     let decodedStr = "";
 
     for (let i = 0; i < encryptedStr.length; i++) {
-      const decodedCharCode = encryptedStr.charCodeAt(i) + number;
+      const decodedCharCode = encryptedStr.charCodeAt(i) - number;
       decodedStr += String.fromCharCode(decodedCharCode);
     }
 
@@ -39,7 +39,7 @@ function App() {
     let queue = ["/api/timdecillis@gmail.com"];
     while (queue.length) {
       const url = queue.pop();
-      console.log('url:', url)
+
       if (url) {
         const response = await axios.get(url);
         console.log("response:", response.data);
@@ -65,7 +65,6 @@ function App() {
             numberToAdd = method.slice(6, 7);
           }
           numberToAdd = parseInt(numberToAdd as string);
-          console.log('num to add:', numberToAdd)
           encrypted_path = decodeAsciiString(encrypted_path, numberToAdd);
         }
         queue.push(`task_${encrypted_path}`);
