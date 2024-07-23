@@ -47,7 +47,6 @@ function App() {
       throw new Error("Hex set must contain exactly 16 characters.");
     }
 
-    // Create a mapping from hex set characters to their corresponding values (0-15)
     const hexMap: { [key: string]: number } = {};
     for (let i = 0; i < hexSet.length; i++) {
       hexMap[hexSet[i]] = i;
@@ -55,17 +54,16 @@ function App() {
 
     let decodedStr = "";
 
-    // Iterate through the encoded string two characters at a time
     for (let i = 0; i < encodedStr.length; i += 2) {
       const highChar = encodedStr[i];
       const lowChar = encodedStr[i + 1];
 
-      // Ensure the characters are in the hexMap
       if (!(highChar in hexMap) || !(lowChar in hexMap)) {
-        throw new Error("Encoded string contains characters not in the hex set.");
+        throw new Error(
+          "Encoded string contains characters not in the hex set."
+        );
       }
 
-      // Convert hex pair to the corresponding ASCII character
       const highValue = hexMap[highChar];
       const lowValue = hexMap[lowChar];
       const decodedCharCode = (highValue << 4) | lowValue;
@@ -82,7 +80,7 @@ function App() {
     let queue = ["/api/timdecillis@gmail.com"];
     while (queue.length) {
       const url = queue.pop();
-
+      console.log("url:", url);
       if (url) {
         const response = await axios.get(url);
         console.log("response:", response.data);
