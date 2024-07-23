@@ -33,16 +33,40 @@ function App() {
     return asciiArray.map((value) => String.fromCharCode(value)).join("");
   };
   const findHexSet = (string: string) => {
-
     let index;
     for (let i = string.length - 1; i > 0; i--) {
-
       if (string[i] === " ") {
-        index = i;
+        index = i + 1;
         break;
       }
     }
     return string.slice(index);
+  };
+  const decodeWithHexSet = (encodedStr: string, hexSet: string): string => {
+    console.log(hexSet.length);
+    if (hexSet.length !== 16) {
+      throw new Error("Hex set must contain exactly 16 characters.");
+    }
+
+    const hexMap: { [key: string]: number } = {};
+    for (let i = 0; i < hexSet.length; i++) {
+      hexMap[hexSet[i]] = i;
+    }
+
+    let decodedStr = "";
+
+    for (let i = 0; i < encodedStr.length; i += 2) {
+      const highChar = encodedStr[i];
+      const lowChar = encodedStr[i + 1];
+
+      const highValue = hexMap[highChar];
+      const lowValue = hexMap[lowChar];
+      const decodedCharCode = (highValue << 4) | lowValue;
+
+      decodedStr += String.fromCharCode(decodedCharCode);
+    }
+
+    return decodedStr;
   };
 
   const fetchData = async () => {
@@ -77,7 +101,9 @@ function App() {
         if (
           encryption_method.includes("encoded it with custom hex character")
         ) {
-          console.log("hex set:", findHexSet(encryption_method));
+          const hexSet = findHexSet(encryption_method);
+          console.log("hex:", hexSet);
+          encrypted_path = decodeWithHexSet(encrypted_path, hexSet);
         }
         queue.push(`task_${encrypted_path}`);
       }
