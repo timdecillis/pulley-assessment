@@ -32,6 +32,18 @@ function App() {
   const decodeAsciiArray = (asciiArray: number[]) => {
     return asciiArray.map((value) => String.fromCharCode(value)).join("");
   };
+  const findHexSet = (string: string) => {
+
+    let index;
+    for (let i = string.length - 1; i > 0; i--) {
+
+      if (string[i] === " ") {
+        index = i;
+        break;
+      }
+    }
+    return string.slice(index);
+  };
 
   const fetchData = async () => {
     if (hasFetched.current) return;
@@ -45,27 +57,27 @@ function App() {
         console.log("response:", response.data);
         let { encrypted_path } = response.data;
         encrypted_path = encrypted_path.slice(5);
-        if (
-          response.data.encryption_method ===
-          "converted to a JSON array of ASCII values"
-        ) {
+        const { encryption_method } = response.data;
+        if (encryption_method === "converted to a JSON array of ASCII values") {
           encrypted_path = decodeAsciiArray(JSON.parse(encrypted_path));
         }
-        if (
-          response.data.encryption_method === "swapped every pair of characters"
-        ) {
+        if (encryption_method === "swapped every pair of characters") {
           encrypted_path = swapPairs(encrypted_path);
         }
-        if (response.data.encryption_method.slice(0, 5) === "added") {
-          let numberToAdd: number| string;
-          const method = response.data.encryption_method;
-          if (method.slice(7, 8) !== " ") {
-            numberToAdd = method.slice(6, 8);
+        if (encryption_method.slice(0, 5) === "added") {
+          let numberToAdd: number | string;
+          if (encryption_method.slice(7, 8) !== " ") {
+            numberToAdd = encryption_method.slice(6, 8);
           } else {
-            numberToAdd = method.slice(6, 7);
+            numberToAdd = encryption_method.slice(6, 7);
           }
           numberToAdd = parseInt(numberToAdd as string);
           encrypted_path = decodeAsciiString(encrypted_path, numberToAdd);
+        }
+        if (
+          encryption_method.includes("encoded it with custom hex character")
+        ) {
+          console.log("hex set:", findHexSet(encryption_method));
         }
         queue.push(`task_${encrypted_path}`);
       }
