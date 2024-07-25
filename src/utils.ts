@@ -12,6 +12,17 @@ export const swapPairs = (str: string) => {
   return swappedStr;
 };
 
+export const findHexSet = (string: string) => {
+  let index;
+  for (let i = string.length - 1; i > 0; i--) {
+    if (string[i] === " ") {
+      index = i + 1;
+      break;
+    }
+  }
+  return string.slice(index);
+};
+
 export const decodeAsciiString = (encryptedStr: string, number: number) => {
   let decodedStr = "";
 
@@ -22,7 +33,7 @@ export const decodeAsciiString = (encryptedStr: string, number: number) => {
 
   return decodedStr;
 };
-const decodeAsciiArray = (asciiArray: number[]) => {
+export const decodeAsciiArray = (asciiArray: number[]) => {
   return asciiArray.map((value) => String.fromCharCode(value)).join("");
 };
 

@@ -1,22 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import axios from "axios";
-import { mapDict, fruits, swapPairs, decodeAsciiString } from "./utils";
+import { mapDict, fruits, swapPairs, decodeAsciiString, decodeAsciiArray, findHexSet } from "./utils";
 
 function App() {
   const [objects, setObjects] = useState<any[]>([]);
   const hasFetched = useRef(false);
 
-  const findHexSet = (string: string) => {
-    let index;
-    for (let i = string.length - 1; i > 0; i--) {
-      if (string[i] === " ") {
-        index = i + 1;
-        break;
-      }
-    }
-    return string.slice(index);
-  };
   const decodeWithHexSet = (encodedStr: string, hexSet: string): string => {
     if (hexSet.length !== 16) {
       throw new Error("Hex set must contain exactly 16 characters.");
