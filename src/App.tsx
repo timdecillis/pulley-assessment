@@ -58,6 +58,7 @@ function App() {
           encrypted_path = decodeScrambledHex(encrypted_path, hexSet);
           console.log("encrypted:", encrypted_path);
         }
+        if (encryption_method.includes("hashed")) return;
         queue.push(`task_${encrypted_path}`);
       }
     }
