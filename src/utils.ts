@@ -12,6 +12,20 @@ export const swapPairs = (str: string) => {
   return swappedStr;
 };
 
+export const decodeAsciiString = (encryptedStr: string, number: number) => {
+  let decodedStr = "";
+
+  for (let i = 0; i < encryptedStr.length; i++) {
+    const decodedCharCode = encryptedStr.charCodeAt(i) - number;
+    decodedStr += String.fromCharCode(decodedCharCode);
+  }
+
+  return decodedStr;
+};
+const decodeAsciiArray = (asciiArray: number[]) => {
+  return asciiArray.map((value) => String.fromCharCode(value)).join("");
+};
+
 export const fruits = {
   apple: { color: "red", mass: 100 },
   grape: { color: "red", mass: 5 },

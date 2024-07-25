@@ -1,27 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import axios from "axios";
-import { mapDict, fruits, swapPairs } from "./utils";
+import { mapDict, fruits, swapPairs, decodeAsciiString } from "./utils";
 
 function App() {
   const [objects, setObjects] = useState<any[]>([]);
   const hasFetched = useRef(false);
 
-
-
-  const decodeAsciiString = (encryptedStr: string, number: number) => {
-    let decodedStr = "";
-
-    for (let i = 0; i < encryptedStr.length; i++) {
-      const decodedCharCode = encryptedStr.charCodeAt(i) - number;
-      decodedStr += String.fromCharCode(decodedCharCode);
-    }
-
-    return decodedStr;
-  };
-  const decodeAsciiArray = (asciiArray: number[]) => {
-    return asciiArray.map((value) => String.fromCharCode(value)).join("");
-  };
   const findHexSet = (string: string) => {
     let index;
     for (let i = string.length - 1; i > 0; i--) {
