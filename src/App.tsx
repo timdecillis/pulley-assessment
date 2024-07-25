@@ -11,6 +11,7 @@ import {
   decodeCustomHex,
   decodeScrambledHex,
   decodeBase64Path,
+  decodeRotated,
 } from "./utils";
 
 function App() {
@@ -61,6 +62,13 @@ function App() {
         }
         if (encryption_method === "encoded as base64") {
           encrypted_path = decodeBase64Path(encrypted_path);
+        }
+        if (encryption_method.includes("circularly rotated")) {
+          console.log('foo')
+          encrypted_path = decodeRotated(
+            encrypted_path,
+            parseInt(findHexSet(encryption_method))
+          );
         }
         if (encryption_method.includes("hashed")) return;
         queue.push(`task_${encrypted_path}`);
