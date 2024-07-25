@@ -1,13 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import axios from "axios";
-import { mapDict, fruits, swapPairs, decodeAsciiString, decodeAsciiArray, findHexSet, decodeWithHexSet } from "./utils";
+import {
+  mapDict,
+  fruits,
+  swapPairs,
+  decodeAsciiString,
+  decodeAsciiArray,
+  findHexSet,
+  decodeCustomHex,
+} from "./utils";
 
 function App() {
   const [objects, setObjects] = useState<any[]>([]);
   const hasFetched = useRef(false);
-
-
 
   const fetchData = async () => {
     if (hasFetched.current) return;
@@ -44,8 +50,7 @@ function App() {
           encryption_method.includes("encoded it with custom hex character")
         ) {
           const hexSet = findHexSet(encryption_method);
-          console.log("hex:", hexSet);
-          encrypted_path = decodeWithHexSet(encrypted_path, hexSet);
+          encrypted_path = decodeCustomHex(encrypted_path, hexSet);
         }
         queue.push(`task_${encrypted_path}`);
       }
