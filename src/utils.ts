@@ -23,6 +23,51 @@ export const findHexSet = (string: string) => {
   return string.slice(index);
 };
 
+export const decodeWithHexSet = (
+  encodedStr: string,
+  hexSet: string
+): string => {
+  if (hexSet.length !== 16) {
+    throw new Error("Hex set must contain exactly 16 characters.");
+  }
+
+  // Create a mapping from hex set characters to their corresponding values (0-15)
+  const hexMap: { [key: string]: number } = {};
+  for (let i = 0; i < hexSet.length; i++) {
+    hexMap[hexSet[i]] = i;
+  }
+
+  console.log("Hex Map:", hexMap);
+
+  let decodedStr = "";
+
+  // Iterate through the encoded string two characters at a time
+  for (let i = 0; i < encodedStr.length; i += 2) {
+    const highChar = encodedStr[i];
+    const lowChar = encodedStr[i + 1];
+
+    // Ensure the characters are in the hexMap
+    if (!(highChar in hexMap) || !(lowChar in hexMap)) {
+      throw new Error(
+        `Encoded string contains characters not in the hex set: ${highChar}, ${lowChar}`
+      );
+    }
+
+    // Convert hex pair to the corresponding ASCII character
+    const highValue = hexMap[highChar];
+    const lowValue = hexMap[lowChar];
+    const decodedCharCode = (highValue << 4) | lowValue;
+
+    console.log(
+      `Chars: ${highChar}${lowChar}, Values: ${highValue}, ${lowValue}, Decoded Char Code: ${decodedCharCode}`
+    );
+
+    decodedStr += String.fromCharCode(decodedCharCode);
+  }
+
+  return decodedStr;
+};
+
 export const decodeAsciiString = (encryptedStr: string, number: number) => {
   let decodedStr = "";
 
