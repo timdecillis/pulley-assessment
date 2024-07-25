@@ -1,24 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import axios from "axios";
+import { mapDict, fruits, swapPairs } from "./utils";
 
 function App() {
   const [objects, setObjects] = useState<any[]>([]);
   const hasFetched = useRef(false);
 
-  const swapPairs = (str: string) => {
-    let swappedStr = "";
 
-    for (let i = 0; i < str.length; i += 2) {
-      if (i + 1 < str.length) {
-        swappedStr += str[i + 1] + str[i];
-      } else {
-        swappedStr += str[i];
-      }
-    }
 
-    return swappedStr;
-  };
   const decodeAsciiString = (encryptedStr: string, number: number) => {
     let decodedStr = "";
 
@@ -64,7 +54,9 @@ function App() {
 
       // Ensure the characters are in the hexMap
       if (!(highChar in hexMap) || !(lowChar in hexMap)) {
-        throw new Error(`Encoded string contains characters not in the hex set: ${highChar}, ${lowChar}`);
+        throw new Error(
+          `Encoded string contains characters not in the hex set: ${highChar}, ${lowChar}`
+        );
       }
 
       // Convert hex pair to the corresponding ASCII character
@@ -72,7 +64,9 @@ function App() {
       const lowValue = hexMap[lowChar];
       const decodedCharCode = (highValue << 4) | lowValue;
 
-      console.log(`Chars: ${highChar}${lowChar}, Values: ${highValue}, ${lowValue}, Decoded Char Code: ${decodedCharCode}`);
+      console.log(
+        `Chars: ${highChar}${lowChar}, Values: ${highValue}, ${lowValue}, Decoded Char Code: ${decodedCharCode}`
+      );
 
       decodedStr += String.fromCharCode(decodedCharCode);
     }
@@ -83,6 +77,8 @@ function App() {
   const fetchData = async () => {
     if (hasFetched.current) return;
     hasFetched.current = true;
+    // console.log(mapDict(fruits))
+
     let queue = ["/api/timdecillis@gmail.com"];
     while (queue.length) {
       const url = queue.pop();
