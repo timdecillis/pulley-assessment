@@ -1,3 +1,5 @@
+import { decode as msgpackDecode } from "@msgpack/msgpack";
+
 export const swapPairs = (str: string) => {
   let swappedStr = "";
 
@@ -54,6 +56,33 @@ export const decodeCustomHex = (
   }
 
   return decodedString;
+};
+export const decodeScrambledHex = (
+  encodedString: string,
+  base64Positions: string
+): string => {
+  function base64Decode(base64: string): Uint8Array {
+    const binaryString = atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
+  }
+
+  const messagePackData = base64Decode(base64Positions);
+
+  const positionsArray = msgpackDecode(messagePackData) as number[];
+
+  const decodedArray = new Array(encodedString.length);
+
+  for (let i = 0; i < encodedString.length; i++) {
+    const originalPosition = positionsArray[i];
+    decodedArray[originalPosition] = encodedString[i];
+  }
+
+  return decodedArray.join("");
 };
 
 export const fruits = {

@@ -9,6 +9,7 @@ import {
   decodeAsciiArray,
   findHexSet,
   decodeCustomHex,
+  decodeScrambledHex,
 } from "./utils";
 
 function App() {
@@ -51,6 +52,11 @@ function App() {
         ) {
           const hexSet = findHexSet(encryption_method);
           encrypted_path = decodeCustomHex(encrypted_path, hexSet);
+        }
+        if (encryption_method.includes("scrambled!")) {
+          let hexSet = findHexSet(encryption_method);
+          encrypted_path = decodeScrambledHex(encrypted_path, hexSet);
+          console.log("encrypted:", encrypted_path);
         }
         queue.push(`task_${encrypted_path}`);
       }
