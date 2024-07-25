@@ -95,12 +95,14 @@ export const decodeBase64Path = (encryptedPath: string): string => {
   }
 };
 
-export const decodeRotated = (encryptedPath: string, amount: number): string => {
-let result = ''
-result += encryptedPath.slice(amount)
-result += encryptedPath.slice(0, amount)
-return result
-}
+export const decodeRotated = (
+  encryptedPath: string,
+  amount: number
+): string => {
+  const beginningSlice = encryptedPath.slice(-amount);
+  const endSlice = encryptedPath.slice(0, -amount);
+  return beginningSlice + endSlice;
+};
 export const fruits = {
   apple: { color: "red", mass: 100 },
   grape: { color: "red", mass: 5 },
