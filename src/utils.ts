@@ -85,6 +85,16 @@ export const decodeScrambledHex = (
   return decodedArray.join("");
 };
 
+export const decodeBase64Path = (encryptedPath: string): string => {
+  try {
+    const decodedString = atob(encryptedPath);
+    return decodedString;
+  } catch (error) {
+    console.error("Failed to decode the encrypted path:", error);
+    return "";
+  }
+};
+
 export const fruits = {
   apple: { color: "red", mass: 100 },
   grape: { color: "red", mass: 5 },

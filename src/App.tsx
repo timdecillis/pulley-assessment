@@ -10,6 +10,7 @@ import {
   findHexSet,
   decodeCustomHex,
   decodeScrambledHex,
+  decodeBase64Path,
 } from "./utils";
 
 function App() {
@@ -57,6 +58,9 @@ function App() {
           let hexSet = findHexSet(encryption_method);
           encrypted_path = decodeScrambledHex(encrypted_path, hexSet);
           console.log("encrypted:", encrypted_path);
+        }
+        if (encryption_method === "encoded as base64") {
+          encrypted_path = decodeBase64Path(encrypted_path);
         }
         if (encryption_method.includes("hashed")) return;
         queue.push(`task_${encrypted_path}`);
