@@ -21,7 +21,7 @@ function App() {
     hasFetched.current = true;
     // console.log(mapDict(fruits))
 
-    let queue = ["/api/timdecillis@gmail.com"];
+    let queue = ["/timdecillis@gmail.com"];
     while (queue.length) {
       const url = queue.pop();
       console.log("url:", url);

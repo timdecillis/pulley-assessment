@@ -6,9 +6,6 @@ module.exports = function (app: any) {
     createProxyMiddleware({
       target: "https://ciphersprint.pulley.com",
       changeOrigin: true,
-      pathRewrite: {
-        "^/api": "",
-      },
     })
   );
 };
