@@ -1,6 +1,6 @@
 import { decode as msgpackDecode } from "@msgpack/msgpack";
 
-export const swapPairs = (str: string, method:string = "none") => {
+export const swapPairs = (str: string) => {
   let swappedStr = "";
 
   for (let i = 0; i < str.length; i += 2) {

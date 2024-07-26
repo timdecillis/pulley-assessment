@@ -19,8 +19,9 @@ function App() {
   const [objects, setObjects] = useState<any[]>([]);
   const hasFetched = useRef(false);
 
-  const decryptPath = (path: string, method: keyof typeof methods = "none") => {
-    const result = methods[method](path, method)
+  const decryptPath = (path: string, method: keyof typeof methods) => {
+      const matchingMethod = methods[method];
+      const result = matchingMethod.length === 1
   };
 
   const fetchData = async () => {
