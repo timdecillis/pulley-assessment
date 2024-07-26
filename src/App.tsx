@@ -18,6 +18,8 @@ function App() {
   const [objects, setObjects] = useState<any[]>([]);
   const hasFetched = useRef(false);
 
+  const methods = { none: (path: string) => path };
+
   const fetchData = async () => {
     if (hasFetched.current) return;
     hasFetched.current = true;
@@ -26,7 +28,6 @@ function App() {
     let queue = ["/timdecillis@gmail.com"];
     while (queue.length) {
       const url = queue.pop();
-      console.log("url:", url);
       if (url) {
         const response = await axios.get(url);
         console.log("response:", response.data);
@@ -68,7 +69,6 @@ function App() {
             encrypted_path,
             parseInt(findHexSet(encryption_method))
           );
-
         }
         if (encryption_method.includes("hashed")) return;
         queue.push(`task_${encrypted_path}`);
