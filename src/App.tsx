@@ -18,7 +18,16 @@ function App() {
   const [objects, setObjects] = useState<any[]>([]);
   const hasFetched = useRef(false);
 
-  const methods = { none: (path: string) => path };
+  const methods = {
+    "none": (path: string) => path,
+    "converted to a JSON array of ASCII values": (path: string) => path,
+    "swapped every pair of characters": (path: string) => path,
+    "encoded it with custom hex character": (path: string) => path,
+    "scrambled!": (path: string) => path,
+    "encoded as base64": (path: string) => path,
+    "circularly rotated": (path: string) => path,
+    "hashed": (path: string) => path
+  };
 
   const fetchData = async () => {
     if (hasFetched.current) return;
