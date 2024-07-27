@@ -1,7 +1,6 @@
 import {
   decodeCustomHex,
   swapPairs,
-  decodeAsciiArray,
   decodeAsciiString,
   decodeBase64Path,
   decodeScrambledHex,
@@ -16,5 +15,5 @@ export const methods = {
   base64: decodeBase64Path,
   rotated: decodeRotated,
   added: decodeAsciiString,
-  hashed: (path: string) => path,
+  hashed: (path: string) => "",
 };

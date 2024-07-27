@@ -1,5 +1,18 @@
 import { decode as msgpackDecode } from "@msgpack/msgpack";
 
+import { methods } from "./methods";
+
+export const decryptPath = (path: string, method: keyof typeof methods): string => {
+  const methodKey = findMethodKey(method) as keyof typeof methods;
+  const currentMethod = methods[methodKey] as (
+    path: string,
+    method?: keyof typeof methods
+  ) => any;
+  return currentMethod.length === 2
+    ? currentMethod(path, method)
+    : currentMethod(path);
+};
+
 export const findMethodKey = (method: string): string => {
   if (method === "encoded as base64") return "base64";
   if (method === "nothing") return "nothing";
