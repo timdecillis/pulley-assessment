@@ -1,5 +1,7 @@
 import { decode as msgpackDecode } from "@msgpack/msgpack";
 
+import { methods } from "./methods";
+
 export const findMethodKey = (method: string): string => {
   if (method === "encoded as base64") return "base64";
   if (method === "nothing") return "nothing";
@@ -74,7 +76,7 @@ export const decodeScrambledHex = (
   encodedString: string,
   method: string
 ): string => {
-  const base64Positions = findSet(method)
+  const base64Positions = findSet(method);
   function base64Decode(base64: string): Uint8Array {
     const binaryString = atob(base64);
     const len = binaryString.length;

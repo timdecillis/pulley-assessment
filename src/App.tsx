@@ -13,22 +13,13 @@ import {
   decodeRotated,
   findMethodKey,
 } from "./utils";
-import { methods } from "./methods";
+import { decryptPath } from "./decryptPath";
 
 function App() {
   const [objects, setObjects] = useState<any[]>([]);
   const hasFetched = useRef(false);
 
-  const decryptPath = (path: string, method: keyof typeof methods): string => {
-    const methodKey = findMethodKey(method) as keyof typeof methods;
-    const currentMethod = methods[methodKey] as (
-      path: string,
-      method?: keyof typeof methods
-    ) => any;
-    return currentMethod.length === 2
-      ? currentMethod(path, method)
-      : currentMethod(path);
-  };
+
 
   const fetchData = async () => {
     if (hasFetched.current) return;
