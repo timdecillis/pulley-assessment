@@ -16,7 +16,7 @@ export type Methods = {
   hashed: (path: string) => "";
 };
 
-export type Key = keyof Methods | "";
+export type Key = keyof Methods;
 
 export const methods: Methods = {
   nothing: (path: string) => path,

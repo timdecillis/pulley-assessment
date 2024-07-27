@@ -2,7 +2,7 @@ import { decode as msgpackDecode } from "@msgpack/msgpack";
 
 import { Key } from "./methods";
 
-export const findMethodKey = (method: string): Key => {
+export const findMethodKey = (method: string): Key | "" => {
   if (method === "encoded as base64") return "base64";
   if (method === "nothing") return "nothing";
   if (method === "swapped every pair of characters") return "swapped";
@@ -10,7 +10,7 @@ export const findMethodKey = (method: string): Key => {
   if (method.includes("encoded it with custom hex character"))
     return "customHex";
   if (method.includes("scrambled!")) return "scrambled";
-  if (method.includes("hashed")) return "hashed";
+  if (method.includes("hashed")) return "";
   return "";
 };
 
@@ -37,17 +37,6 @@ export const findSet = (string: string) => {
     }
   }
   return string.slice(index);
-};
-
-export const decodeAsciiString = (encryptedStr: string, number: number) => {
-  let decodedStr = "";
-
-  for (let i = 0; i < encryptedStr.length; i++) {
-    const decodedCharCode = encryptedStr.charCodeAt(i) - number;
-    decodedStr += String.fromCharCode(decodedCharCode);
-  }
-
-  return decodedStr;
 };
 
 export const decodeCustomHex = (

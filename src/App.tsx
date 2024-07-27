@@ -25,6 +25,7 @@ function App() {
         if (decryptedPath) queue.push(`task_${decryptedPath}`);
       }
     }
+    return;
   };
 
   useEffect(() => {
