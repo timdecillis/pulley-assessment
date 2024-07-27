@@ -121,11 +121,14 @@ interface Dict<T> {
   [k: string]: T;
 }
 
-export const mapDict = <T>(object: Dict<T>): Dict<T> => {
-  let result: Dict<T> = {};
-  const keys = Object.keys(object);
+export const mapDict = <T, S>(
+  inputDict: Dict<T>,
+  mapFunction: (original: T, key: string) => S
+): Dict<S> => {
+  let result: Dict<S> = {};
+  const keys = Object.keys(inputDict);
   keys.forEach((key) => {
-    result[key + "s"] = object[key];
+    result[key] = mapFunction(inputDict[key], key);
   });
   return result;
 };
