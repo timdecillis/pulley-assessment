@@ -1,5 +1,17 @@
 import { decode as msgpackDecode } from "@msgpack/msgpack";
 
+export const findMethodKey = (method: string): string => {
+  if (method === "encoded as base64") return "base64";
+  if (method === "nothing") return "nothing";
+  if (method === "swapped every pair of characters") return "swapped";
+  if (method.includes("circularly rotated")) return "rotated";
+  if (method.includes("encoded it with custom hex character"))
+    return "customHex";
+  if (method.includes("scrambled!")) return "scrambled";
+  if (method.includes("hashed")) return "hashed";
+  return "";
+};
+
 export const swapPairs = (str: string) => {
   let swappedStr = "";
 

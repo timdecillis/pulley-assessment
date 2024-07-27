@@ -20,13 +20,17 @@ function App() {
   const hasFetched = useRef(false);
 
   const decryptPath = (path: string, method: keyof typeof methods) => {
-    Object.keys(methods).forEach((key) => {
+    const keys = Object.keys(methods);
+
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      console.log("current method:", method, "current key:", key);
       if (method.includes(key)) {
         const matchingMethod = methods[method];
-        console.log('method:', matchingMethod)
-        console.log('length:', matchingMethod.length)
+        console.log("match:", matchingMethod);
+        break;
       }
-    })
+    }
   };
 
   const fetchData = async () => {
@@ -39,11 +43,11 @@ function App() {
       const url = queue.pop();
       if (url) {
         const response = await axios.get(url);
-        console.log("response:", response.data);
+        // console.log("response:", response.data);
         let { encrypted_path } = response.data;
         encrypted_path = encrypted_path.slice(5);
         const { encryption_method } = response.data;
-        decryptPath(encrypted_path, encryption_method)
+        decryptPath(encrypted_path, encryption_method);
         if (encryption_method === "converted to a JSON array of ASCII values") {
           encrypted_path = decodeAsciiArray(JSON.parse(encrypted_path));
         }
