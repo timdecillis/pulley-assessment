@@ -139,10 +139,24 @@ export const filterDict = <T>(
   let result: Dict<T> = {};
   for (let key of Object.keys(inputDict)) {
     const current = inputDict[key];
-    if(filterFunction(current, key)) {
+    if (filterFunction(current, key)) {
       result[key] = current;
     }
   }
   return result;
 };
-export const reduceDict = () => {};
+export const reduceDict = <T, S>(
+  inputDict: Dict<T>,
+  reduceFunction: (current: S, next: T, key: string) => S,
+  initialValue?: S
+) => {
+  for (let key of Object.keys(inputDict)) {
+    const current = inputDict[key]
+    if (initialValue === undefined) {
+      initialValue = current as unknown as S
+      continue;
+    }
+    initialValue = reduceFunction(initialValue, current, key)
+  }
+  return initialValue
+};
