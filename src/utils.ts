@@ -53,9 +53,10 @@ export const decodeAsciiArray = (asciiArray: number[]) => {
 
 export const decodeCustomHex = (
   encodedString: string,
-  customHexSet: string
+  method: string
 ): string => {
   const standardHexSet = "0123456789abcdef";
+  const customHexSet = findHexSet(method);
 
   const customToStandardMap: { [key: string]: string } = {};
   for (let i = 0; i < customHexSet.length; i++) {
@@ -109,8 +110,9 @@ export const decodeBase64Path = (encryptedPath: string): string => {
 
 export const decodeRotated = (
   encryptedPath: string,
-  amount: number
+  method: string
 ): string => {
+  const amount = parseInt(findHexSet(method));
   const beginningSlice = encryptedPath.slice(-amount);
   const endSlice = encryptedPath.slice(0, -amount);
   return beginningSlice + endSlice;

@@ -10,12 +10,11 @@ import {
 
 export const methods = {
   nothing: (path: string) => path,
-  "converted to a JSON array of ASCII values": decodeAsciiArray,
-  "swapped every pair of characters": swapPairs,
-  "encoded it with custom hex character": decodeCustomHex,
-  "scrambled!": decodeScrambledHex,
-  "encoded as base64": decodeBase64Path,
-  "rotated": decodeRotated,
+  swapped: swapPairs,
+  customHex: decodeCustomHex,
+  scrambled: decodeScrambledHex,
+  base64: decodeBase64Path,
+  rotated: decodeRotated,
   added: decodeAsciiString,
   hashed: (path: string) => path,
 };
