@@ -26,7 +26,7 @@ export const swapPairs = (str: string) => {
   return swappedStr;
 };
 
-export const findHexSet = (string: string) => {
+export const findSet = (string: string) => {
   let index;
   for (let i = string.length - 1; i > 0; i--) {
     if (string[i] === " ") {
@@ -56,7 +56,7 @@ export const decodeCustomHex = (
   method: string
 ): string => {
   const standardHexSet = "0123456789abcdef";
-  const customHexSet = findHexSet(method);
+  const customHexSet = findSet(method);
 
   const customToStandardMap: { [key: string]: string } = {};
   for (let i = 0; i < customHexSet.length; i++) {
@@ -72,8 +72,9 @@ export const decodeCustomHex = (
 };
 export const decodeScrambledHex = (
   encodedString: string,
-  base64Positions: string
+  method: string
 ): string => {
+  const base64Positions = findSet(method);
   function base64Decode(base64: string): Uint8Array {
     const binaryString = atob(base64);
     const len = binaryString.length;
@@ -112,7 +113,7 @@ export const decodeRotated = (
   encryptedPath: string,
   method: string
 ): string => {
-  const amount = parseInt(findHexSet(method));
+  const amount = parseInt(findSet(method));
   const beginningSlice = encryptedPath.slice(-amount);
   const endSlice = encryptedPath.slice(0, -amount);
   return beginningSlice + endSlice;
