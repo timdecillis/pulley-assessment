@@ -132,5 +132,17 @@ export const mapDict = <T, S>(
   });
   return result;
 };
-export const filterDict = () => {};
+export const filterDict = <T>(
+  inputDict: Dict<T>,
+  filterFunction: (original: T, key: string) => boolean
+): Dict<T> => {
+  let result: Dict<T> = {};
+  for (let key of Object.keys(inputDict)) {
+    const current = inputDict[key];
+    if(filterFunction(current, key)) {
+      result[key] = current;
+    }
+  }
+  return result;
+};
 export const reduceDict = () => {};
