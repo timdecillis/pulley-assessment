@@ -1,6 +1,8 @@
 import { decode as msgpackDecode } from "@msgpack/msgpack";
 
-export const findMethodKey = (method: string): string => {
+import { Key } from "./methods";
+
+export const findMethodKey = (method: string): Key => {
   if (method === "encoded as base64") return "base64";
   if (method === "nothing") return "nothing";
   if (method === "swapped every pair of characters") return "swapped";
