@@ -1,6 +1,7 @@
 import {
   decodeCustomHex,
   swapPairs,
+  decodeAsciiArray,
   decodeAsciiString,
   decodeBase64Path,
   decodeScrambledHex,

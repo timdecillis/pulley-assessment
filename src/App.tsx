@@ -12,12 +12,23 @@ import {
   decodeBase64Path,
   decodeRotated,
   findMethodKey,
-  decryptPath,
 } from "./utils";
+import { methods } from "./methods";
 
 function App() {
   const [objects, setObjects] = useState<any[]>([]);
   const hasFetched = useRef(false);
+
+  const decryptPath = (path: string, method: keyof typeof methods): string => {
+    const methodKey = findMethodKey(method) as keyof typeof methods;
+    const currentMethod = methods[methodKey] as (
+      path: string,
+      method?: keyof typeof methods
+    ) => any;
+    return currentMethod.length === 2
+      ? currentMethod(path, method)
+      : currentMethod(path);
+  };
 
   const fetchData = async () => {
     if (hasFetched.current) return;
@@ -33,7 +44,46 @@ function App() {
         let { encrypted_path } = response.data;
         encrypted_path = encrypted_path.slice(5);
         const { encryption_method } = response.data;
-        queue.push(`task_${decryptPath(encrypted_path, encryption_method)}`);
+        const decryptedPath = decryptPath(encrypted_path, encryption_method);
+        if (decryptedPath) queue.push(`task_${decryptedPath}`);
+
+        // if (encryption_method === "converted to a JSON array of ASCII values") {
+        //   encrypted_path = decodeAsciiArray(JSON.parse(encrypted_path));
+        // }
+        // if (encryption_method === "swapped every pair of characters") {
+        //   encrypted_path = swapPairs(encrypted_path);
+        // }
+        // if (encryption_method.slice(0, 5) === "added") {
+        //   let numberToAdd: number | string;
+        //   if (encryption_method.slice(7, 8) !== " ") {
+        //     numberToAdd = encryption_method.slice(6, 8);
+        //   } else {
+        //     numberToAdd = encryption_method.slice(6, 7);
+        //   }
+        //   numberToAdd = parseInt(numberToAdd as string);
+        //   encrypted_path = decodeAsciiString(encrypted_path, numberToAdd);
+        // }
+        // if (
+        //   encryption_method.includes("encoded it with custom hex character")
+        // ) {
+        //   const hexSet = findHexSet(encryption_method);
+        //   encrypted_path = decodeCustomHex(encrypted_path, hexSet);
+        // }
+        // if (encryption_method.includes("scrambled!")) {
+        //   let hexSet = findHexSet(encryption_method);
+        //   encrypted_path = decodeScrambledHex(encrypted_path, hexSet);
+        // }
+        // if (encryption_method === "encoded as base64") {
+        //   encrypted_path = decodeBase64Path(encrypted_path);
+        // }
+        // if (encryption_method.includes("circularly rotated")) {
+        //   encrypted_path = decodeRotated(
+        //     encrypted_path,
+        //     parseInt(findHexSet(encryption_method))
+        //   );
+        // }
+        // if (encryption_method.includes("hashed")) return;
+        // queue.push(`task_${encrypted_path}`);
       }
     }
   };
