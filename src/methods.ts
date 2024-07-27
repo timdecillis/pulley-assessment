@@ -1,19 +1,27 @@
 import {
   decodeCustomHex,
   swapPairs,
-  decodeAsciiString,
   decodeBase64Path,
   decodeScrambledHex,
   decodeRotated,
 } from "./utils";
 
-export const methods = {
+export type Methods = {
+  nothing: (path: string) => string;
+  swapped: (path: string) => string;
+  customHex: (path: string, method: string) => string;
+  scrambled: (path: string, method: string) => string;
+  base64: (path: string) => string;
+  rotated: (path: string, method: string) => string;
+  hashed: (path: string) => "";
+};
+
+export const methods: Methods = {
   nothing: (path: string) => path,
   swapped: swapPairs,
   customHex: decodeCustomHex,
   scrambled: decodeScrambledHex,
   base64: decodeBase64Path,
   rotated: decodeRotated,
-  added: decodeAsciiString,
   hashed: (path: string) => "",
 };
