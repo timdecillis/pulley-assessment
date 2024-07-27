@@ -1,25 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import axios from "axios";
-import {
-  mapDict,
-  fruits,
-  swapPairs,
-  decodeAsciiString,
-  decodeAsciiArray,
-  decodeCustomHex,
-  decodeScrambledHex,
-  decodeBase64Path,
-  decodeRotated,
-  findMethodKey,
-} from "./utils";
 import { decryptPath } from "./decryptPath";
 
 function App() {
   const [objects, setObjects] = useState<any[]>([]);
   const hasFetched = useRef(false);
-
-
 
   const fetchData = async () => {
     if (hasFetched.current) return;

@@ -1,7 +1,5 @@
 import { decode as msgpackDecode } from "@msgpack/msgpack";
 
-import { methods } from "./methods";
-
 export const findMethodKey = (method: string): string => {
   if (method === "encoded as base64") return "base64";
   if (method === "nothing") return "nothing";
@@ -48,9 +46,6 @@ export const decodeAsciiString = (encryptedStr: string, number: number) => {
   }
 
   return decodedStr;
-};
-export const decodeAsciiArray = (asciiArray: number[]) => {
-  return asciiArray.map((value) => String.fromCharCode(value)).join("");
 };
 
 export const decodeCustomHex = (
