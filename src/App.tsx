@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import axios from "axios";
 import { decryptPath } from "./decryptPath";
+import { fruits, mapDict, filterDict, reduceDict } from "./dictMethods";
 
 function App() {
   const [levels, setLevels] = useState<any[]>([]);
