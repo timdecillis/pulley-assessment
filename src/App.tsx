@@ -4,23 +4,22 @@ import axios from "axios";
 import { decryptPath } from "./decryptPath";
 
 function App() {
-  const [objects, setObjects] = useState<any[]>([]);
+  const [levels, setLevels] = useState<any[]>([]);
   const hasFetched = useRef(false);
 
   const fetchData = async () => {
     if (hasFetched.current) return;
     hasFetched.current = true;
-    // console.log(mapDict(fruits))
 
     let queue = ["/timdecillis@gmail.com"];
     while (queue.length) {
       const url = queue.pop();
       if (url) {
         const response = await axios.get(url);
-        console.log("response:", response.data);
         let { encrypted_path } = response.data;
         encrypted_path = encrypted_path.slice(5);
-        const { encryption_method } = response.data;
+        const { encryption_method, level } = response.data;
+        levels.push(level);
         const decryptedPath = decryptPath(encrypted_path, encryption_method);
         if (decryptedPath) queue.push(`task_${decryptedPath}`);
       }
@@ -34,9 +33,9 @@ function App() {
   return (
     <div className="App">
       <h1>Endpoints Data</h1>
-      {/* {objects.map((object) => {
-        return <div>{object.step}</div>;
-      })} */}
+      {levels.map((level, i) => {
+        return <div key={i}>Level reached: {level}</div>;
+      })}
     </div>
   );
 }
