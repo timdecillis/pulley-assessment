@@ -12,12 +12,14 @@ function App() {
     if (hasFetched.current) return;
     hasFetched.current = true;
 
-    const filterResult = filterDict(fruits, ())
+    const filterResult = filterDict(fruits, (original) => {
+      return original.color === "red"
+    });
 
     const mapResult = mapDict(fruits, (original) => {
-      return {...original, mass: original.mass + 10}
-    })
-    console.log('result:', mapResult)
+      return { ...original, mass: original.mass + 10 };
+    });
+    console.log("result:", filterResult);
 
     let queue = ["/timdecillis@gmail.com"];
     while (queue.length) {
