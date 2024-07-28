@@ -12,6 +12,11 @@ function App() {
     if (hasFetched.current) return;
     hasFetched.current = true;
 
+    const mapResult = mapDict(fruits, (original, key) => {
+      return {...original, mass: original.mass + 10}
+    })
+    console.log('result:', mapResult)
+
     let queue = ["/timdecillis@gmail.com"];
     while (queue.length) {
       const url = queue.pop();
