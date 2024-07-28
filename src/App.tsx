@@ -12,7 +12,9 @@ function App() {
     if (hasFetched.current) return;
     hasFetched.current = true;
 
-    const mapResult = mapDict(fruits, (original, key) => {
+    const filterResult = filterDict(fruits, ())
+
+    const mapResult = mapDict(fruits, (original) => {
       return {...original, mass: original.mass + 10}
     })
     console.log('result:', mapResult)
