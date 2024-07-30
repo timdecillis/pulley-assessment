@@ -15,13 +15,8 @@ function App() {
     while (queue.length) {
       const url = queue.pop();
       if (url) {
-        const fetchedEndpoint = await fetchEndpoint(url)
-        const response = await axios.get(url);
-        let { encrypted_path } = response.data;
-        encrypted_path = encrypted_path.slice(5);
-        const { encryption_method, level } = response.data;
+        const {decryptedPath, level} = await fetchEndpoint(url)
         setLevels(prevLevels => [...prevLevels, level])
-        const decryptedPath = decryptPath(encrypted_path, encryption_method);
         if (decryptedPath) queue.push(`task_${decryptedPath}`);
       }
     }
