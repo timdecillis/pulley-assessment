@@ -20,6 +20,7 @@ function App() {
         let { encrypted_path } = response.data;
         encrypted_path = encrypted_path.slice(5);
         const { encryption_method, level } = response.data;
+        setLevels(prevLevels => [...prevLevels, level])
         levels.push(level);
         const decryptedPath = decryptPath(encrypted_path, encryption_method);
         if (decryptedPath) queue.push(`task_${decryptedPath}`);
