@@ -12,24 +12,6 @@ function App() {
     if (hasFetched.current) return;
     hasFetched.current = true;
 
-    const filterResult = filterDict(fruits, (original, key) => {
-      return key === "apple"
-    });
-
-    const mapResult = mapDict(fruits, (original) => {
-      return { ...original, mass: original.mass + 10 };
-    });
-
-    const reduceResult = reduceDict(
-      fruits,
-      (current, item) => {
-        return {mass: current.mass + item.mass};
-      },
-      { mass: 0 }
-    );
-
-    console.log("result:", reduceResult.mass);
-
     let queue = ["/timdecillis@gmail.com"];
     while (queue.length) {
       const url = queue.pop();
