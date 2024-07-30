@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
-import axios from "axios";
-import { decryptPath, fetchEndpoint } from "./decryptPath";
+import { fetchEndpoint } from "./decryptPath";
 
 function App() {
   const [levels, setLevels] = useState<any[]>([]);
@@ -12,20 +11,27 @@ function App() {
     hasFetched.current = true;
 
     let queue = ["/timdecillis@gmail.com"];
+
     while (queue.length) {
       const url = queue.pop();
       if (url) {
-        const {decryptedPath, level} = await fetchEndpoint(url)
-        setLevels(prevLevels => [...prevLevels, level])
-        if (decryptedPath) queue.push(`task_${decryptedPath}`);
+        try {
+          const { decryptedPath, level } = await fetchEndpoint(url);
+          setLevels((prevLevels) => [...prevLevels, level]);
+          if (decryptedPath) queue.push(`task_${decryptedPath}`);
+        } catch (err) {
+          console.error(`There was an error resolving the endpoint: ${err}`);
+        }
       }
     }
+
     return;
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <div className="App">
       <h1>Endpoints Data</h1>
