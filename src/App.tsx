@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import axios from "axios";
-import { decryptPath } from "./decryptPath";
+import { decryptPath, fetchEndpoint } from "./decryptPath";
 
 function App() {
   const [levels, setLevels] = useState<any[]>([]);
@@ -15,6 +15,7 @@ function App() {
     while (queue.length) {
       const url = queue.pop();
       if (url) {
+        const fetchedEndpoint = await fetchEndpoint(url)
         const response = await axios.get(url);
         let { encrypted_path } = response.data;
         encrypted_path = encrypted_path.slice(5);
