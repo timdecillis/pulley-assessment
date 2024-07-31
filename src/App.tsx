@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
-import { fetchEndpoint } from "./decryptPath";
+import { fetchAllEndpoints } from "./decryptPath";
 
 function App() {
   const [levels, setLevels] = useState<any[]>([]);
