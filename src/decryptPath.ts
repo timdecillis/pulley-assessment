@@ -19,6 +19,18 @@ export const decryptPath = (path: string, method: string): string => {
   return "";
 };
 
-export const fetchAllEndpoints = (startURL) => {
+export const fetchAllEndpoints = async (startURL) => {
   let queue = [startURL];
+  while (queue.length) {
+    const url = queue.pop();
+    if (url) {
+      try {
+        const { decryptedPath, level } = await fetchEndpoint(url);
+        setLevels((prevLevels) => [...prevLevels, level]);
+        if (decryptedPath) queue.push(`task_${decryptedPath}`);
+      } catch (err) {
+        console.error(`There was an error resolving the endpoint: ${err}`);
+      }
+    }
+  }
 };

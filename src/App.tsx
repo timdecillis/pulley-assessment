@@ -10,21 +10,8 @@ function App() {
     if (hasFetched.current) return;
     hasFetched.current = true;
 
-    let queue = ["/timdecillis@gmail.com"];
-
-    while (queue.length) {
-      const url = queue.pop();
-      if (url) {
-        try {
-          const { decryptedPath, level } = await fetchEndpoint(url);
-          setLevels((prevLevels) => [...prevLevels, level]);
-          if (decryptedPath) queue.push(`task_${decryptedPath}`);
-        } catch (err) {
-          console.error(`There was an error resolving the endpoint: ${err}`);
-        }
-      }
-    }
-
+    const updatedLevels = await fetchAllEndpoints("/timdecillis@gmail.com");
+    setLevels((prevLevels) => [...prevLevels, updatedLevels]);
     return;
   };
 
