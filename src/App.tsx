@@ -11,7 +11,7 @@ function App() {
     hasFetched.current = true;
 
     const updatedLevels = await fetchAllEndpoints("/timdecillis@gmail.com");
-    setLevels((prevLevels) => [...prevLevels, updatedLevels]);
+    setLevels(updatedLevels);
     return;
   };
 

@@ -4,6 +4,7 @@ import { findMethodKey } from "./utils";
 
 export const fetchEndpoint = async (url: string) => {
   const response = await axios.get(url);
+  console.log(response.data);
   let { encryption_method, level, encrypted_path } = response.data;
   encrypted_path = encrypted_path.slice(5);
   const decryptedPath = decryptPath(encrypted_path, encryption_method);
@@ -34,4 +35,5 @@ export const fetchAllEndpoints = async (startURL: string) => {
       }
     }
   }
+  return levels;
 };
