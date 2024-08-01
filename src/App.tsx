@@ -9,7 +9,6 @@ function App() {
   const fetchData = async () => {
     if (hasFetched.current) return;
     hasFetched.current = true;
-
     const updatedLevels = await fetchAllEndpoints("/timdecillis@gmail.com");
     setLevels(updatedLevels);
     return;
